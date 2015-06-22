@@ -156,35 +156,30 @@ SpriteMorph.uber = PenMorph.prototype;
 
 // SpriteMorph settings
 
-SpriteMorph.prototype.artifacts =
-	[
-		'boot'
-	];
-
 SpriteMorph.prototype.categories =
     [
+     	'fire',
         'motion',
+     	'water',
         'control',
-        'looks',
-        'sensing',
-        'sound',
-        'operators',
-        'pen',
-        'variables',
-        'lists',
-        'other'
+        'wind',
+        'voice',
+        'earth',
+        'physical',
+        'lightning',
+        'other',
     ];
 
 SpriteMorph.prototype.blockColor = {
-    motion : new Color(74, 108, 212),
-    looks : new Color(143, 86, 227),
-    sound : new Color(207, 74, 217),
-    pen : new Color(0, 161, 120),
-    control : new Color(230, 168, 34),
-    sensing : new Color(4, 148, 220),
-    operators : new Color(98, 194, 19),
-    variables : new Color(243, 118, 29),
-    lists : new Color(217, 77, 17),
+    motion : new Color(203, 122, 0),
+    fire : new Color(247, 0, 0),
+    water : new Color(0, 0, 247),
+    wind : new Color(255, 255, 255),
+    control : new Color(128, 44, 39),
+    lightning : new Color(255, 239, 0),
+    voice : new Color(144, 39, 156),
+    physical : new Color(94, 110, 99),
+    earth : new Color(13, 156, 51),
     other: new Color(150, 150, 150)
 };
 
@@ -209,6 +204,52 @@ SpriteMorph.prototype.bubbleMaxTextWidth = 130;
 
 SpriteMorph.prototype.initBlocks = function () {
     SpriteMorph.prototype.blocks = {
+    		
+            
+        //fire
+        inferno: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'fire',
+            spec: 'Inferno',
+        },
+        ignite: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'fire',
+            spec: 'Ignite',
+        },
+        flash: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'fire',
+            spec: 'Flash-Blind %n Times',
+            defaults: [5]
+        },
+        fusion: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'fire',
+            spec: 'Fusion',
+        },
+        fireEat: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'fire',
+            spec: 'Fire Eat',
+        },
+        
+        
+        //Water
+        
+        
+        //Wind
+        
+        
+        //Earth
+        
+        
+        //Lightning
 
         // Motion
         forward: {
@@ -1741,8 +1782,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             }
         }
     }
-
-    if (cat === 'motion') {
+    if (cat === 'fire') {
+    	blocks.push(block('inferno'));
+    	blocks.push(block('ignite'));
+    	blocks.push(block('flash'));
+    	blocks.push(block('fusion'));
+    	blocks.push(block('fireEat'));
+    } 
+    else if (cat === 'motion') {
 
         blocks.push(block('forward'));
         blocks.push(block('turn'));
@@ -1769,7 +1816,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(watcherToggle('direction'));
         blocks.push(block('direction'));
 
-    } else if (cat === 'looks') {
+    } 
+    
+    else if (cat === 'looks') {
 
         blocks.push(block('doSwitchToCostume'));
         blocks.push(block('doWearNextCostume'));
@@ -3314,6 +3363,28 @@ SpriteMorph.prototype.nestingBounds = function () {
     return result;
 };
 
+
+// SpriteMorph fire primitives
+
+SpriteMorph.prototype.inferno = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.ignite = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.flash = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.fusion = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.fireEat = function (){
+	//put code here
+};
 // SpriteMorph motion primitives
 
 Morph.prototype.setPosition = function (aPoint, justMe) {
@@ -3341,6 +3412,8 @@ SpriteMorph.prototype.forward = function (steps) {
     this.positionTalkBubble();
 
 };
+
+
 
 SpriteMorph.prototype.setHeading = function (degrees) {
     var x = this.xPosition(),
