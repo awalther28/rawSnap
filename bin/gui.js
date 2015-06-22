@@ -212,7 +212,9 @@ IDE_Morph.prototype.init = function (isAutoFill) {
 
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
-    this.sprites = new List([this.currentSprite]);
+    var extra = new SpriteMorph(this.globalVariables);
+    var ex2 = new SpriteMorph(this.globalVariables);
+    this.sprites = new List([this.currentSprite, extra, ex2]);
     this.currentCategory = 'motion';
     this.currentTab = 'scripts';
     this.projectName = '';
@@ -1335,7 +1337,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
     nameField = new InputFieldMorph(this.currentSprite.name);
     nameField.setWidth(100); // fixed dimensions
     nameField.contrast = 90;
-    nameField.setPosition(myself.spriteBar.position().add(new Point(10, 3)));
+    nameField.setPosition(myself.spriteBar.position().add(new Point(130, 3)));
     this.spriteBar.add(nameField);
     nameField.drawNew();
     nameField.accept = function () {
@@ -1372,8 +1374,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
     
     
     this.spriteBar.frame = frame;
-    this.spriteBar.frame.setPosition(myself.spriteBar.position().add(new Point(125, 3))
-    );
+    this.spriteBar.frame.setPosition(myself.spriteBar.position().add(
+    		new Point(125, 30)));
     this.spriteBar.add(frame);
     
     this.spriteBar.fixLayoutSP = function () {
@@ -1469,7 +1471,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
     tab.labelColor = this.buttonLabelColor;
     tab.drawNew();
     tab.fixLayout();
-    tabBar.add(tab);
+    //comment out so we can make the 'sprite tabs'
+    //tabBar.add(tab);
 
 
     tabBar.fixLayout();
@@ -3197,7 +3200,9 @@ IDE_Morph.prototype.newProject = function () {
     }
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
-    this.sprites = new List([this.currentSprite]);
+    //added another sprite to all new projects
+    var extra = new SpriteMorph(this.globalVariables);
+    this.sprites = new List([this.currentSprite, extra]);
     StageMorph.prototype.dimensions = new Point(480, 360);
     StageMorph.prototype.hiddenPrimitives = {};
     StageMorph.prototype.codeMappings = {};
