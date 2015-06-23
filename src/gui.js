@@ -1498,7 +1498,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
 
 };
 
-
+//below is original createSpriteEditor from Snap
 /*
 IDE_Morph.prototype.createSpriteEditor = function () {
     // assumes that the logo pane and the stage have already been created
@@ -1568,7 +1568,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
 };
 */
 
-//below down by me
+//below is modified
 IDE_Morph.prototype.createSpriteEditor = function () {
     // assumes that the logo pane and the stage have already been created
     var scripts = this.currentSprite.scripts,
@@ -1598,7 +1598,9 @@ IDE_Morph.prototype.createSpriteEditor = function () {
         this.add(this.spriteEditor);
         this.spriteEditor.scrollX(this.spriteEditor.padding);
         this.spriteEditor.scrollY(this.spriteEditor.padding);
-    } else if (this.currentTab === '2') {
+        //don't need these tabs
+        /*
+    } else if (this.currentTab === 'costumes') {
         scripts.isDraggable = false;
         scripts.color = this.groupColor;
         scripts.cachedTexture = this.scriptsPaneTexture;
@@ -1628,6 +1630,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
         this.spriteEditor.updateSelection();
         this.spriteEditor.acceptDrops = false;
         this.spriteEditor.contents.acceptsDrops = false;
+        */
     } else {
         this.spriteEditor = new Morph();
         this.spriteEditor.color = this.groupColor;
@@ -1644,7 +1647,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
         this.add(this.spriteEditor);
     }
 };
-//above done by me
+
 
 IDE_Morph.prototype.createCorralBar = function () {
     // assumes the stage has already been created
@@ -1672,6 +1675,7 @@ IDE_Morph.prototype.createCorralBar = function () {
         "addNewSprite",
         new SymbolMorph("turtle", 14)
     );
+    
     newbutton.corner = 12;
     newbutton.color = colors[0];
     newbutton.highlightColor = colors[1];
@@ -2251,6 +2255,7 @@ IDE_Morph.prototype.addNewSprite = function () {
 
     this.sprites.add(sprite);
     this.corral.addSprite(sprite);
+    //added the sprite to where the artifacts are
     this.spriteBar.addSprite(sprite);
     this.selectSprite(sprite);
 };
@@ -2265,6 +2270,7 @@ IDE_Morph.prototype.paintNewSprite = function () {
     this.stage.add(sprite);
     this.sprites.add(sprite);
     this.corral.addSprite(sprite);
+  //added the sprite to where the artifacts are
     this.spriteBar.addSprite(sprite);
     this.selectSprite(sprite);
     cos.edit(
@@ -3201,8 +3207,8 @@ IDE_Morph.prototype.newProject = function () {
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
     //added another sprite to all new projects
-    var extra = new SpriteMorph(this.globalVariables);
-    this.sprites = new List([this.currentSprite, extra]);
+    //var extra = new SpriteMorph(this.globalVariables);
+    this.sprites = new List([this.currentSprite]);
     StageMorph.prototype.dimensions = new Point(480, 360);
     StageMorph.prototype.hiddenPrimitives = {};
     StageMorph.prototype.codeMappings = {};
@@ -3304,6 +3310,7 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
                     this.serializer.serialize(this.stage)
                 );
                 //this.setURL('#open:' + str);
+                //where XML is generated
                 javaTextField.setText('data:text/'
                     + (plain ? 'plain,' + str : 'xml,' + str));
                 //menu.destroy();
@@ -3321,6 +3328,7 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
                 + (plain ? 'plain,' + str : 'xml,' + str));
            // menu.destroy();
             //this.showMessage('Exported!', 1);
+            
         }
     }
 };
