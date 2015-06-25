@@ -1016,6 +1016,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 true
             );
             break;
+         //drop down menu for hat blocks
         case '%key':
             part = new InputSlotMorph(
                 null,
@@ -1061,7 +1062,11 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                     '6' : ['6'],
                     '7' : ['7'],
                     '8' : ['8'],
-                    '9' : ['9']
+                    '9' : ['9'],
+                    a1 : ['a1'] 
+                //added 'a1' in to test if we can create our
+                //own drop down menu
+                //works with event dispatching
                 },
                 true
             );

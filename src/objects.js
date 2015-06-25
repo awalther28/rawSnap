@@ -636,7 +636,7 @@ SpriteMorph.prototype.initBlocks = function () {
 		receiveID: {
 			type: 'hat',
 			category: 'control',
-			spec: 'Button 1'
+			spec: 'Button %keyHat'
 		},
 		
 		leftArrow: {
@@ -3622,6 +3622,7 @@ SpriteMorph.prototype.allHatBlocksFor = function (message) {
     });
 };
 
+
 SpriteMorph.prototype.allHatBlocksForKey = function (key) {
     return this.scripts.children.filter(function (morph) {
         if (morph.selector) {
@@ -4857,7 +4858,7 @@ StageMorph.prototype.processIdEvent = function (event, action) {
 
 //third step: sister to fireKeyEvent
 StageMorph.prototype.IdEvent = function (ID) {
-    var evt = ID,
+    var evt = ID, //the number in the drop down menu
         hats = [],
         myself = this,
         procs = [];
@@ -4878,7 +4879,8 @@ SpriteMorph.prototype.allHatBlocksForId = function (ID) {
     return this.scripts.children.filter(function (morph) {
         if (morph.selector) {
             if (morph.selector === 'receiveID') {
-                return morph.blockSpec === ID;
+            	//this allows us to use a drop down menu
+                return morph.inputs()[0].evaluate()[0] === ID;
             }
         }
         return false;

@@ -9603,6 +9603,17 @@ HandMorph.prototype.processTouchEnd = function (event) {
     this.processMouseUp({button: 0});
 };
 
+//new handmorph method for adding new sprite morphs
+/*
+HandMorph.prototype.processNewSprite = function () {
+	console.log("helloWorld");
+	var sprite = new PushButtonMorph(this, "addNewSprite");
+	sprite.mouseClickLeft();
+	
+};
+*/
+
+
 HandMorph.prototype.processMouseUp = function () {
     var morph = this.morphAtPointer(),
         context,
@@ -10325,6 +10336,7 @@ WorldMorph.prototype.initEventListeners = function () {
         false
     );
 
+    //how we call scripts from the console
 	canvas.addEventListener(
 		"CK",
 		function (event) {
@@ -10335,6 +10347,20 @@ WorldMorph.prototype.initEventListeners = function () {
 		},
 		false
 	);
+	
+	
+	//attempt at calling add new sprite function
+	/*
+    canvas.addEventListener(
+        "sprite",
+        function(event) {
+        	if (myself.keyboardReceiver) {
+        		myself.hand.processNewSprite(event);
+        	}
+        },
+        false
+            );
+            */
 
     canvas.addEventListener(
         "keydown",

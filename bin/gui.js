@@ -212,9 +212,11 @@ IDE_Morph.prototype.init = function (isAutoFill) {
 
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
-    var extra = new SpriteMorph(this.globalVariables);
+    //adding more sprites 
+    this.extra = new SpriteMorph(this.globalVariables);
     var ex2 = new SpriteMorph(this.globalVariables);
-    this.sprites = new List([this.currentSprite, extra, ex2]);
+    //however many sprites that are currently on the screen
+    this.sprites = new List([this.currentSprite]);
     this.currentCategory = 'motion';
     this.currentTab = 'scripts';
     this.projectName = '';
@@ -245,6 +247,7 @@ IDE_Morph.prototype.init = function (isAutoFill) {
     // initialize inherited properties:
     IDE_Morph.uber.init.call(this);
 
+    
     // override inherited properites:
     this.color = this.backgroundColor;
 };
@@ -474,6 +477,7 @@ IDE_Morph.prototype.buildPanes = function () {
     this.createSpriteEditor();
     this.createCorralBar();
     this.createCorral();
+    //this.viewSprites();
 };
 
 IDE_Morph.prototype.createLogo = function () {
@@ -1234,6 +1238,14 @@ IDE_Morph.prototype.createSpriteBar = function () {
 };
 */
 
+//Testing out my own idea of filtering
+IDE_Morph.prototype.viewSprites = function(){
+	var sprite = this.allSprites(0);
+	var newAll = newList([sprite]);
+	this.sprites = newAll;
+	
+};
+
 IDE_Morph.prototype.createSpriteBar = function () {
     // assumes that the categories pane has already been created
     var rotationStyleButtons = [],
@@ -1411,7 +1423,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
         this.frame.contents.add(new SpriteIconMorph(sprite));
         this.fixLayoutSP();
     };
-
+      
     this.spriteBar.refresh = function () {
         //this.stageIcon.refresh();
         this.frame.contents.children.forEach(function (icon) {
@@ -1495,7 +1507,11 @@ IDE_Morph.prototype.createSpriteBar = function () {
         this.refresh();
     };
     
-
+    //adding sprites to the screen
+    myself.spriteBar.addSprite(this.extra);
+    this.stage.add(this.extra);
+    //this.sprites.add(sprite);
+    
 };
 
 //below is original createSpriteEditor from Snap
@@ -3305,29 +3321,29 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
         this.setProjectName(name);
         if (Process.prototype.isCatchingErrors) {
             try {
-                //menu = this.showMessage('Exporting');
+                menu = this.showMessage('Exporting');
                 str = encodeURIComponent(
                     this.serializer.serialize(this.stage)
                 );
-                //this.setURL('#open:' + str);
+                this.setURL('#open:' + str);
                 //where XML is generated
-                javaTextField.setText('data:text/'
+                window.open('data:text/'
                     + (plain ? 'plain,' + str : 'xml,' + str));
-                //menu.destroy();
-                //this.showMessage('Exported!', 1);
+                menu.destroy();
+                this.showMessage('Exported!', 1);
             } catch (err) {
-                //this.showMessage('Export failed: ' + err);
+                this.showMessage('Export failed: ' + err);
             }
         } else {
-            //menu = this.showMessage('Exporting');
+            menu = this.showMessage('Exporting');
             str = encodeURIComponent(
                 this.serializer.serialize(this.stage)
             );
-            //this.setURL('#open:' + str);
-            window.alert('data:text/'
+            this.setURL('#open:' + str);
+            window.open('data:text/'
                 + (plain ? 'plain,' + str : 'xml,' + str));
-           // menu.destroy();
-            //this.showMessage('Exported!', 1);
+            menu.destroy();
+            this.showMessage('Exported!', 1);
             
         }
     }
