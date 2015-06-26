@@ -9528,8 +9528,9 @@ HandMorph.prototype.processMouseDown = function (event) {
     if (this.children.length !== 0) {
         this.drop();
         this.mouseButton = null;
-    } else {
-        morph = this.morphAtPointer();
+    }     
+    morph = this.morphAtPointer();
+    if (morph.direction != 'down' && morph.text != 'c' && morph.isUnevaluated != false){
         if (this.world.activeMenu) {
             if (!contains(
                     morph.allParents(),
