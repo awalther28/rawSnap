@@ -477,7 +477,8 @@ IDE_Morph.prototype.buildPanes = function () {
     this.createSpriteEditor();
     this.createCorralBar();
     this.createCorral();
-    //this.viewSprites();
+    //added this in to create the artifact icon in the spriteBar
+    this.setArtifact();
 };
 
 IDE_Morph.prototype.createLogo = function () {
@@ -1239,10 +1240,45 @@ IDE_Morph.prototype.createSpriteBar = function () {
 */
 
 //Testing out my own idea of filtering
-IDE_Morph.prototype.viewSprites = function(){
-	var sprite = this.allSprites(0);
-	var newAll = newList([sprite]);
-	this.sprites = newAll;
+IDE_Morph.prototype.setArtifact = function(){
+	//added parts of IDE_Morph.prototype.createLogo
+    //trying to add a picture to the corner
+	var thumbnail;
+    thumbnail = new Morph();
+    thumbnail.texture = 'rightArrow.png';
+    thumbnail.drawNew = function () {
+        this.image = newCanvas(this.extent());
+        var context = this.image.getContext('2d'),
+            gradient = context.createLinearGradient(
+                0,
+                0,
+                this.width(),
+                0
+            );
+        gradient.addColorStop(0, 'black');
+        gradient.addColorStop(0.5, myself.frameColor.toString());
+        context.fillStyle = MorphicPreferences.isFlat ?
+                myself.frameColor.toString() : gradient;
+        context.fillRect(0, 0, this.width(), this.height());
+        if (this.texture) {
+            this.drawTexture(this.texture);
+        }
+    };
+
+    thumbnail.drawCachedTexture = function () {
+        var context = this.image.getContext('2d');
+        context.drawImage(
+            this.cachedTexture,
+            5,
+            Math.round((this.height() - this.cachedTexture.height) / 2)
+        );
+        this.changed();
+    };
+    
+    thumbnail.setPosition(
+            this.spriteBar.position().add(new Point(5, 3))
+        );
+    this.spriteBar.add(thumbnail);
 	
 };
 
@@ -1326,8 +1362,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
     //addRotationStyleButton(2);
     //addRotationStyleButton(0);
     this.rotationStyleButtons = rotationStyleButtons;
-
-    thumbnail = new Morph();
+      
+    /*
     thumbnail.setExtent(thumbSize);
     thumbnail.image = this.currentSprite.thumbnail(thumbSize);
     thumbnail.setPosition(
@@ -1344,6 +1380,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
             thumbnail.version = myself.currentSprite.version;
         }
     };
+    */
 
 
     nameField = new InputFieldMorph(this.currentSprite.name);
