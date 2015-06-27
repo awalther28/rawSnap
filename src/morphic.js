@@ -10351,17 +10351,15 @@ WorldMorph.prototype.initEventListeners = function () {
 	
 	
 	//attempt at calling add new sprite function
-	/*
+	
     canvas.addEventListener(
-        "sprite",
+        "icon",
         function(event) {
-        	if (myself.keyboardReceiver) {
-        		myself.hand.processNewSprite(event);
-        	}
+        		myself.worldCanvas.changeArtifact(event);
         },
         false
             );
-            */
+            
 
     canvas.addEventListener(
         "keydown",

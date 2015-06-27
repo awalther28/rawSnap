@@ -1242,8 +1242,18 @@ IDE_Morph.prototype.createSpriteBar = function () {
 };
 */
 
-//Testing out my own idea of filtering
-IDE_Morph.prototype.setArtifact = function(){
+//Trying out an event to change the artifact
+//this calls setArtifact
+IDE_Morph.prototype.changeArtifact = function(event){
+	var img = event.detail;
+	this.setArtifact(img);
+	
+};
+
+
+//Creates the artifact icon
+//took png processing from how Snap added their logo
+IDE_Morph.prototype.setArtifact = function(image){
 	//added parts of IDE_Morph.prototype.createLogo
     //trying to add a picture to the corner
 
@@ -1251,7 +1261,7 @@ IDE_Morph.prototype.setArtifact = function(){
 	var myself = this;
 	
     thumbnail = new Morph();
-    thumbnail.texture = 'rightArrow.png';
+    thumbnail.texture = image;
     thumbnail.drawNew = function () {
         this.image = newCanvas(this.extent());
         var context = this.image.getContext('2d'), 
@@ -4078,6 +4088,8 @@ IDE_Morph.prototype.reflectLanguage = function (lang, callback) {
     this.spriteBar.tabBar.tabTo('scripts');
     this.createCategories();
     this.createCorralBar();
+    //added this (hopefully it'll fix the import project?)
+    this.createSpriteBar();
     this.fixLayout();
     if (this.loadNewProject) {
         this.newProject();
