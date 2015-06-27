@@ -509,6 +509,7 @@ IDE_Morph.prototype.createLogo = function () {
         }
     };
 
+    
     this.logo.drawCachedTexture = function () {
         var context = this.image.getContext('2d');
         context.drawImage(
@@ -518,13 +519,15 @@ IDE_Morph.prototype.createLogo = function () {
         );
         this.changed();
     };
-
+    /*
     this.logo.mouseClickLeft = function () {
         myself.snapMenu();
     };
+    */
 
     this.logo.color = new Color();
     this.logo.setExtent(new Point(200, 28)); // dimensions are fixed
+    
     this.add(this.logo);
 };
 
@@ -1243,20 +1246,24 @@ IDE_Morph.prototype.createSpriteBar = function () {
 IDE_Morph.prototype.setArtifact = function(){
 	//added parts of IDE_Morph.prototype.createLogo
     //trying to add a picture to the corner
+
 	var thumbnail;
+	var myself = this;
+	
     thumbnail = new Morph();
     thumbnail.texture = 'rightArrow.png';
     thumbnail.drawNew = function () {
         this.image = newCanvas(this.extent());
-        var context = this.image.getContext('2d'),
+        var context = this.image.getContext('2d'), 
             gradient = context.createLinearGradient(
                 0,
                 0,
                 this.width(),
                 0
             );
-        gradient.addColorStop(0, 'black');
-        gradient.addColorStop(0.5, myself.frameColor.toString());
+        //can add gradient effect with these below
+       // gradient.addColorStop(0, 'black');
+       // gradient.addColorStop(0.5, myself.frameColor.toString());
         context.fillStyle = MorphicPreferences.isFlat ?
                 myself.frameColor.toString() : gradient;
         context.fillRect(0, 0, this.width(), this.height());
@@ -1274,10 +1281,12 @@ IDE_Morph.prototype.setArtifact = function(){
         );
         this.changed();
     };
-    
+    //changes physical position
     thumbnail.setPosition(
-            this.spriteBar.position().add(new Point(5, 3))
+            this.spriteBar.position().add(new Point(30, 10))
         );
+    //changes size of picture
+    thumbnail.setExtent(new Point(100, 75));
     this.spriteBar.add(thumbnail);
 	
 };
@@ -1883,6 +1892,9 @@ IDE_Morph.prototype.fixLayout = function (situation) {
     var padding = this.padding;
 
     Morph.prototype.trackChanges = false;
+    
+    //ensures that the artifact is always present
+    this.setArtifact();
 
     if (situation !== 'refreshPalette') {
         // controlBar
