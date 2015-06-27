@@ -489,7 +489,8 @@ IDE_Morph.prototype.createLogo = function () {
     }
 
     this.logo = new Morph();
-    this.logo.texture = 'snap_logo_sm.png';
+    //our logo
+    this.logo.texture = 'CKLogo.png';
     this.logo.drawNew = function () {
         this.image = newCanvas(this.extent());
         var context = this.image.getContext('2d'),
@@ -526,7 +527,8 @@ IDE_Morph.prototype.createLogo = function () {
     */
 
     this.logo.color = new Color();
-    this.logo.setExtent(new Point(200, 28)); // dimensions are fixed
+    //changed original dimensions from (200, 28)
+    this.logo.setExtent(new Point(230, 28)); // dimensions are fixed
     
     this.add(this.logo);
 };
@@ -1253,7 +1255,7 @@ IDE_Morph.prototype.changeArtifact = function(event){
 
 //Creates the artifact icon
 //took png processing from how Snap added their logo
-IDE_Morph.prototype.setArtifact = function(image){
+IDE_Morph.prototype.setArtifact = function(){
 	//added parts of IDE_Morph.prototype.createLogo
     //trying to add a picture to the corner
 
@@ -1261,7 +1263,7 @@ IDE_Morph.prototype.setArtifact = function(image){
 	var myself = this;
 	
     thumbnail = new Morph();
-    thumbnail.texture = image;
+    thumbnail.texture = 'combatBoot.png';
     thumbnail.drawNew = function () {
         this.image = newCanvas(this.extent());
         var context = this.image.getContext('2d'), 
