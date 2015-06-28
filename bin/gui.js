@@ -1542,7 +1542,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
     tab.drawNew();
     tab.fixLayout();
     //comment out so we can make the 'sprite tabs'
-    //tabBar.add(tab);
+    //if you comment this out then you can't load projects
+    tabBar.add(tab);
 
 
     tabBar.fixLayout();
@@ -1550,7 +1551,7 @@ IDE_Morph.prototype.createSpriteBar = function () {
         each.refresh();
     });
     this.spriteBar.tabBar = tabBar;
-    this.spriteBar.add(this.spriteBar.tabBar);
+   // this.spriteBar.add(this.spriteBar.tabBar);
 
     this.spriteBar.fixLayout = function () {
         this.tabBar.setLeft(this.left());
@@ -1566,8 +1567,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
     };
     
     //adding sprites to the screen
-    myself.spriteBar.addSprite(this.extra);
-    this.stage.add(this.extra);
+    //myself.spriteBar.addSprite(this.extra);
+    //this.stage.add(this.extra);
     //this.sprites.add(sprite);
     
 };
