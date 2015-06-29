@@ -40,6 +40,9 @@ public class controlPanel extends Application // implements EventHandler<Action
 		TextField t2 = new TextField();
 		t2.setText("where am I?");
 		t2.setPrefWidth(1000);
+		
+		Button button = new Button();
+		button.setText("artifactIcon");
 
 		WebView browser = new WebView();
 
@@ -50,9 +53,13 @@ public class controlPanel extends Application // implements EventHandler<Action
 		JSObject jsobj = (JSObject) webEngine.executeScript("window");
 		jsobj.setMember("javaTextField", t1);
 		jsobj.setMember("javaProcess", t2);
+		button.setOnAction(e -> {webEngine.executeScript("IDE_Morph.setArtifact('combatBoot.png')");});
+		
+		
 
 		grid.add(t1, 0, 4, 2, 1);
 		grid.add(t2, 0, 5, 2, 1);
+		grid.add(button, 0, 3, 2, 1);
 		grid.add(browser, 0, 6, 4, 1);
 
 		Scene scene = new Scene(grid, 1000, 700);

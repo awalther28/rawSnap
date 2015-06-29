@@ -594,7 +594,7 @@ IDE_Morph.prototype.createControlBar = function () {
     button.fixLayout();
     button.refresh();
     stageSizeButton = button;
-    this.controlBar.add(stageSizeButton);
+    //this.controlBar.add(stageSizeButton);
     this.controlBar.stageSizeButton = button; // for refreshing
 
     //appModeButton
@@ -626,7 +626,7 @@ IDE_Morph.prototype.createControlBar = function () {
     button.fixLayout();
     button.refresh();
     appModeButton = button;
-    this.controlBar.add(appModeButton);
+    //this.controlBar.add(appModeButton);
     this.controlBar.appModeButton = appModeButton; // for refreshing
 
     // stopButton
@@ -649,7 +649,7 @@ IDE_Morph.prototype.createControlBar = function () {
     // button.hint = 'stop\nevery-\nthing';
     button.fixLayout();
     stopButton = button;
-    this.controlBar.add(stopButton);
+    //this.controlBar.add(stopButton);
 
     //pauseButton
     button = new ToggleButtonMorph(
@@ -680,7 +680,7 @@ IDE_Morph.prototype.createControlBar = function () {
     button.fixLayout();
     button.refresh();
     pauseButton = button;
-    this.controlBar.add(pauseButton);
+    //this.controlBar.add(pauseButton);
     this.controlBar.pauseButton = pauseButton; // for refreshing
 
     // startButton
@@ -703,7 +703,7 @@ IDE_Morph.prototype.createControlBar = function () {
     // button.hint = 'start green\nflag scripts';
     button.fixLayout();
     startButton = button;
-    this.controlBar.add(startButton);
+    //this.controlBar.add(startButton);
     this.controlBar.startButton = startButton;
 
     // projectButton
