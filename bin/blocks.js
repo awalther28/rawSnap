@@ -5579,7 +5579,8 @@ CommandSlotMorph.prototype.attach = function () {
         });
     });
     if (choices.length > 0) {
-        menu.popUpAtHand(this.world());
+    	//commenting out the drop down menus
+        //menu.popUpAtHand(this.world());
     }
 };
 

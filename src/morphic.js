@@ -9530,7 +9530,8 @@ HandMorph.prototype.processMouseDown = function (event) {
         this.mouseButton = null;
     }     
     morph = this.morphAtPointer();
-    if ((morph.direction != 'down') && (morph.text % 1 != 0) && (morph.isUnevaluated != false)){
+    //making it so you can't move the hat blocks
+    if ((morph.selector != 'receiveID') && (morph.text != 'Button')){
         if (this.world.activeMenu) {
             if (!contains(
                     morph.allParents(),
