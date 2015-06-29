@@ -5580,7 +5580,7 @@ CommandSlotMorph.prototype.attach = function () {
     });
     if (choices.length > 0) {
     	//commenting out the drop down menus
-        //menu.popUpAtHand(this.world());
+        menu.popUpAtHand(this.world());
     }
 };
 
@@ -6603,7 +6603,8 @@ InputSlotMorph.prototype.dropDownMenu = function () {
         }
     }
     if (menu.items.length > 0) {
-        menu.popUpAtHand(this.world());
+    	//commenting out the drop down menus
+        //menu.popUpAtHand(this.world());
     } else {
         return null;
     }
