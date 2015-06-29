@@ -1387,6 +1387,9 @@ SpriteMorph.prototype.init = function (globals) {
     this.isClone = false; // indicate a "temporary" Scratch-style clone
     this.cloneOriginName = '';
 
+    //adding sprite morph icon 
+    this.pic = null;
+    
     // sprite nesting properties
     this.parts = []; // not serialized, only anchor (name)
     this.anchor = null;
@@ -1421,6 +1424,11 @@ SpriteMorph.prototype.init = function (globals) {
     this.changed();
     this.drawNew();
     this.changed();
+};
+
+//setting the picture for the sprite morph icon
+SpriteMorph.prototype.setPic = function (pic){
+	this.pic = pic;
 };
 
 // SpriteMorph duplicating (fullCopy)

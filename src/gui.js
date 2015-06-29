@@ -213,11 +213,21 @@ IDE_Morph.prototype.init = function (isAutoFill) {
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
     //adding more sprites 
-    this.extra = new SpriteMorph(this.globalVariables);
-    var ex2 = new SpriteMorph(this.globalVariables);
+    //this.extra = new SpriteMorph(this.globalVariables);
+    //var ex2 = new SpriteMorph(this.globalVariables);
     //however many sprites that are currently on the screen
-    this.sprites = new List([this.currentSprite]);
-    this.currentCategory = 'motion';
+    this.sprites = new List([]); // this.currentSprite]);
+    this.allSprites = new List([]); //this.currentSprite]);
+    
+    //creating a list for checking to see what sprite goes with
+    // what artifact
+	this.checkList = new List();
+	//initializing 100 spots to null
+	// one for each sprite
+	for(var i = 1; i <= 100; i++) {
+		this.checkList.put(true, i);
+	}
+    this.currentCategory = 'control';
     this.currentTab = 'scripts';
     this.projectName = '';
     this.projectNotes = '';
@@ -231,6 +241,8 @@ IDE_Morph.prototype.init = function (isAutoFill) {
     this.stage = null;
     this.corralBar = null;
     this.corral = null;
+    //image for the Artifact
+    this.img = null;
 
     this.isAutoFill = isAutoFill || true;
     this.isAppMode = false;
@@ -1244,18 +1256,74 @@ IDE_Morph.prototype.createSpriteBar = function () {
 };
 */
 
-//Trying out an event to change the artifact
-//this calls setArtifact
-IDE_Morph.prototype.changeArtifact = function(event){
-	var img = event.detail;
-	this.setArtifact(img);
+//sets up the stage for an artifact
+//parameter: List(artifact.png, all method pngs)
+IDE_Morph.prototype.domino = function(artifact, images){
+	var list = new List([]);
+	var acc = 0;
+	var num = 1;	//used when traversing the checkList
+	var sprite;		//place holder for sprites
+	var lcArtifact;	//used when traversing the checkList
+	var methods = images.length() - 1;
+	
+	//setting the artifact icon
+	this.img = images.at(1);
+	this.setArtifact();
+	
+	//first check to see if we already have sprites for an artifact
+	if (this.checkList.contains(artifact)) {
+		//find where our sprites are in the list
+		lcArtifact = this.checkList.at(num);
+		while (lcArtifact != artifact) {
+			num++;
+			lcArtifact = this.checkList.at(num);
+		}
+		//once found, add our sprites to the list
+		for (var i = 0; i <= methods; i++) {
+			sprite = this.allSprites.at(num);
+			list.add(sprite)
+			num++;
+			i++;
+		}
+	}
+	
+	//finding sprites that are not connected to an artifact
+	else {
+		while (acc != methods) {
+			//where true means sprite is not being used
+			if (this.checkList.at(num) === true) {
+				sprite = this.allSprites.at(num);
+				list.add(sprite);
+				this.checkList.put(artifact, num);
+				num++;
+				acc++;
+			}
+			else
+				num++;
+		}
+		//setting the picture for each sprite
+		var picture;
+		for (var i = 1; i <= methods; i++) {
+			sprite = list.at(i);
+			picture = images.at(i+1);
+			sprite.setPic(picture);
+		}
+	}
+	
+	//updating what sprites are on the screen
+	this.sprites = list;
+	//updating current sprite to the first on the screen
+	this.currentSprite = this.sprites.at(1);
+	
+	//fixing layout and creating all necessary panels
+	this.buildPanes();
+	this.fixLayout();
 	
 };
 
-
 //Creates the artifact icon
 //took png processing from how Snap added their logo
-IDE_Morph.prototype.setArtifact = function(){
+IDE_Morph.prototype.setArtifact = function() {
 	//added parts of IDE_Morph.prototype.createLogo
     //trying to add a picture to the corner
 
@@ -1263,7 +1331,7 @@ IDE_Morph.prototype.setArtifact = function(){
 	var myself = this;
 	
     thumbnail = new Morph();
-    thumbnail.texture = 'combatBoot.png';
+    thumbnail.texture = this.img;
     thumbnail.drawNew = function () {
         this.image = newCanvas(this.extent());
         var context = this.image.getContext('2d'), 
@@ -2332,6 +2400,8 @@ IDE_Morph.prototype.addNewSprite = function () {
     sprite.setYPosition(rnd.call(this, -160, 160));
 
     this.sprites.add(sprite);
+    //updating world sprites
+    this.allSprites.add(sprite);
     this.corral.addSprite(sprite);
     //added the sprite to where the artifacts are
     this.spriteBar.addSprite(sprite);
@@ -2347,6 +2417,8 @@ IDE_Morph.prototype.paintNewSprite = function () {
     sprite.setCenter(this.stage.center());
     this.stage.add(sprite);
     this.sprites.add(sprite);
+    //updating world sprites
+    this.allSprites.add(sprite);
     this.corral.addSprite(sprite);
   //added the sprite to where the artifacts are
     this.spriteBar.addSprite(sprite);
@@ -5741,8 +5813,13 @@ SpriteIconMorph.prototype.init = function (aSprite, aTemplate) {
     );
 
     // override defaults and build additional components
-    this.isDraggable = true;
-    this.createThumbnail();
+    this.isDraggable = false;
+    if (this.object.pic != null){
+    	this.createThumbnail(this.object.pic);
+    }
+    else{
+    	this.createThumbnail();
+    }
     this.padding = 2;
     this.corner = 8;
     this.fixLayout();
@@ -5750,19 +5827,61 @@ SpriteIconMorph.prototype.init = function (aSprite, aTemplate) {
 };
 
 SpriteIconMorph.prototype.createThumbnail = function () {
+	
+	
+};
+
+//changing the thumbnail for the sprite icon
+SpriteIconMorph.prototype.createThumbnail = function (imgS) {
     if (this.thumbnail) {
         this.thumbnail.destroy();
     }
 
+    var myself = this;
+    
     this.thumbnail = new Morph();
-    this.thumbnail.setExtent(this.thumbSize);
+    this.thumbnail.texture = imgS;
+    this.thumbnail.drawNew = function () {
+        this.image = newCanvas(this.extent());
+        var context = this.image.getContext('2d'), 
+            gradient = context.createLinearGradient(
+                0,
+                0,
+                this.width(),
+                0
+            );
+        //can add gradient effect with these below
+       // gradient.addColorStop(0, 'black');
+       // gradient.addColorStop(0.5, myself.frameColor.toString());
+        context.fillStyle = MorphicPreferences.isFlat ?
+                myself.frameColor.toString() : gradient;
+        context.fillRect(0, 0, this.width(), this.height());
+        if (this.texture) {
+            this.drawTexture(this.texture);
+        }
+    };
+
+    this.thumbnail.drawCachedTexture = function () {
+        var context = this.image.getContext('2d');
+        context.drawImage(
+            this.cachedTexture,
+            5,
+            Math.round((this.height() - this.cachedTexture.height) / 2)
+        );
+        this.changed();
+    };
+    
+    /*
     if (this.object instanceof SpriteMorph) { // support nested sprites
         this.thumbnail.image = this.object.fullThumbnail(this.thumbSize);
         this.createRotationButton();
     } else {
         this.thumbnail.image = this.object.thumbnail(this.thumbSize);
     }
-    this.add(this.thumbnail);
+    */
+    this.thumbnail.setExtent(this.thumbSize);
+    this.add(this.thumbnail); 
+    
 };
 
 SpriteIconMorph.prototype.createLabel = function () {

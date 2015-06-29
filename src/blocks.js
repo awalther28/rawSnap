@@ -6602,7 +6602,8 @@ InputSlotMorph.prototype.dropDownMenu = function () {
         }
     }
     if (menu.items.length > 0) {
-        menu.popUpAtHand(this.world());
+    	//commenting out the drop down menus
+        //menu.popUpAtHand(this.world());
     } else {
         return null;
     }
