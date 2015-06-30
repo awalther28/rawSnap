@@ -1264,7 +1264,9 @@ IDE_Morph.prototype.domino = function(artifact, images){
 	var num = 1;	//used when traversing the checkList
 	var sprite;		//place holder for sprites
 	var lcArtifact;	//used when traversing the checkList
-	var methods = images.length() - 1;
+	var methods = images.length() - 1;	//number of methods
+	//var block = new HatBlockMorph();	//hat block 
+	//block.setSelector('receiveID');		//setting selector for hat block
 	
 	//setting the artifact icon
 	this.img = images.at(1);
@@ -1279,11 +1281,10 @@ IDE_Morph.prototype.domino = function(artifact, images){
 			lcArtifact = this.checkList.at(num);
 		}
 		//once found, add our sprites to the list
-		for (var i = 0; i <= methods; i++) {
+		for (var i = 0; i < methods; i++) {
 			sprite = this.allSprites.at(num);
 			list.add(sprite)
 			num++;
-			i++;
 		}
 	}
 	
@@ -1292,8 +1293,13 @@ IDE_Morph.prototype.domino = function(artifact, images){
 		while (acc != methods) {
 			//where true means sprite is not being used
 			if (this.checkList.at(num) === true) {
-				sprite = this.allSprites.at(num);
-				list.add(sprite);
+				this.addNewSprite();
+				list.add(this.currentSprite);
+				//this.allSprites.add(this.currentSprite);
+				var block = new HatBlockMorph();	//hat block 
+				block.setSelector('receiveID');
+				block.setSpec(artifact + ": Button " + acc);
+				this.currentSprite.scripts.addChild(block);
 				this.checkList.put(artifact, num);
 				num++;
 				acc++;

@@ -4888,7 +4888,7 @@ SpriteMorph.prototype.allHatBlocksForId = function (ID) {
         if (morph.selector) {
             if (morph.selector === 'receiveID') {
             	//this allows us to use a drop down menu
-                return morph.inputs()[0].evaluate()[0] === ID;
+                return morph.blockSpec === ID;
             }
         }
         return false;
