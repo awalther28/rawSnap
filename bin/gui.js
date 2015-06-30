@@ -1256,8 +1256,27 @@ IDE_Morph.prototype.createSpriteBar = function () {
 };
 */
 
+//executes scripts
+//parameters are the artifact name & location of spell Vector
+IDE_Morph.prototype.fire = function(artifact, location) {
+	var lcArtifact;
+	var num = 1;
+	var morph;
+	
+	lcArtifact = this.checkList.at(num);
+	while (lcArtifact != artifact) {
+		num++;
+		lcArtifact = this.checkList.at(num);
+	}
+	var sprite = this.allSprites.at(num+location-1);
+	var morph = sprite.scripts.children[0];
+	
+	var event = new CustomEvent("CK", {detail : morph.blockSpec});
+	document.getElementById('world').dispatchEvent(event);
+};
+
 //sets up the stage for an artifact
-//parameter: List(artifact.png, all method pngs)
+//parameter: artifact name & List(artifact.png, all method pngs)
 IDE_Morph.prototype.domino = function(artifact, images){
 	var list = new List([]);
 	var acc = 0;
@@ -1298,7 +1317,7 @@ IDE_Morph.prototype.domino = function(artifact, images){
 				//this.allSprites.add(this.currentSprite);
 				var block = new HatBlockMorph();	//hat block 
 				block.setSelector('receiveID');
-				block.setSpec(artifact + ": Button " + acc);
+				block.setSpec(artifact + ": Button " + acc);	//setting name
 				this.currentSprite.scripts.addChild(block);
 				this.checkList.put(artifact, num);
 				num++;
