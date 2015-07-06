@@ -29,20 +29,23 @@ public class controlPanel extends Application // implements EventHandler<Action
 		grid.setVgap(10);
 		grid.setPadding(new Insets(0, 10, 0, 10));
 
-		Button javaLand = new Button();
-		javaLand.setText("Hello JavaScript");
 		
-
-		TextField t1 = new TextField();
-		t1.setText("XML Here");
-		t1.setPrefWidth(1000);
-
-		TextField t2 = new TextField();
-		t2.setText("where am I?");
-		t2.setPrefWidth(1000);
+		Button a1 = new Button();
+		a1.setText("Combat Boot Artifact");
 		
-		Button button = new Button();
-		button.setText("artifactIcon");
+		Button a2 = new Button();
+		a2.setText("Wand Artifact");
+		
+		Button a3 = new Button();
+		a3.setText("Wind Wand");
+		
+		Button a4 = new Button();
+		a4.setText("Fire Wand");
+		
+		Button a5 = new Button();
+		a5.setText("Execute Script");
+		
+		TextField a6 = new TextField();
 
 		WebView browser = new WebView();
 
@@ -51,18 +54,21 @@ public class controlPanel extends Application // implements EventHandler<Action
 		// Display a local webpage
 		webEngine.load(getClass().getResource("snap.html").toExternalForm());
 		JSObject jsobj = (JSObject) webEngine.executeScript("window");
-		jsobj.setMember("javaTextField", t1);
-		jsobj.setMember("javaProcess", t2);
-		button.setOnAction(e -> {webEngine.executeScript("IDE_Morph.setArtifact('combatBoot.png')");});
+		jsobj.setMember("javaProcess", a6);
+		a1.setOnAction(e -> {webEngine.executeScript("ide.domino('Boot', new List(['combatBoot.png', 'leftArrow.png', 'rightArrow.png']))");});
+		a2.setOnAction(e -> {webEngine.executeScript("ide.domino('Wand', new List(['wandIcon.png', 'sparkles.png', 'vase_overTile.png', 'target.png']))");});
+		a3.setOnAction( e -> {webEngine.executeScript("ide.hideBlock({Shock : true, Storm : true, Revive : true})");});
+		a4.setOnAction( e -> {webEngine.executeScript("ide.hideBlock({Inferno: true, Ignite: true, Fusion: true, FireEat: true})");});
+		a5.setOnAction( e -> {webEngine.executeScript("ide.fire('Boot', 0)");});
 		
-		
+		grid.add(a1, 0, 0);
+		grid.add(a2, 0, 1);
+		grid.add(a3, 0, 2);
+		grid.add(a5, 0, 3);
+		grid.add(a6, 0, 4);
+		grid.add(browser, 2, 0, 4, 5);
 
-		grid.add(t1, 0, 4, 2, 1);
-		grid.add(t2, 0, 5, 2, 1);
-		grid.add(button, 0, 3, 2, 1);
-		grid.add(browser, 0, 6, 4, 1);
-
-		Scene scene = new Scene(grid, 1000, 700);
+		Scene scene = new Scene(grid, 1000, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 

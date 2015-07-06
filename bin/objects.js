@@ -174,7 +174,7 @@ SpriteMorph.prototype.blockColor = {
     motion : new Color(203, 122, 0),
     fire : new Color(247, 0, 0),
     water : new Color(0, 0, 247),
-    wind : new Color(255, 255, 255),
+    wind : new Color(224, 224, 224),
     control : new Color(128, 44, 39),
     lightning : new Color(255, 239, 0),
     voice : new Color(144, 39, 156),
@@ -244,7 +244,26 @@ SpriteMorph.prototype.initBlocks = function () {
         
         
         //Wind
+        shock: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'wind',
+            spec: 'Shock',
+        },
         
+        storm: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'wind',
+            spec: 'Storm',
+        },
+        
+        revive: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'wind',
+            spec: 'Revive',
+        },
         
         //Earth
         
@@ -1431,6 +1450,8 @@ SpriteMorph.prototype.setPic = function (pic){
 	this.pic = pic;
 };
 
+
+
 // SpriteMorph duplicating (fullCopy)
 
 SpriteMorph.prototype.fullCopy = function () {
@@ -1797,6 +1818,13 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     	blocks.push(block('fusion'));
     	blocks.push(block('fireEat'));
     } 
+    
+    else if (cat === 'wind') {
+    	blocks.push(block('shock'));
+    	blocks.push(block('storm'));
+    	blocks.push(block('revive'));
+    }
+    
     else if (cat === 'motion') {
 
         blocks.push(block('forward'));
@@ -3393,6 +3421,20 @@ SpriteMorph.prototype.fusion = function (){
 SpriteMorph.prototype.fireEat = function (){
 	//put code here
 };
+
+
+SpriteMorph.prototype.storm = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.shock = function (){
+	//put code here
+};
+
+SpriteMorph.prototype.revive = function (){
+	//put code here
+};
+
 // SpriteMorph motion primitives
 
 Morph.prototype.setPosition = function (aPoint, justMe) {
@@ -4422,7 +4464,7 @@ StageMorph.uber = FrameMorph.prototype;
 
 // StageMorph preferences settings
 
-StageMorph.prototype.dimensions = new Point(480, 360); // unscaled extent
+StageMorph.prototype.dimensions = new Point(1, 360); // unscaled extent
 
 StageMorph.prototype.frameRate = 0; // unscheduled per default
 

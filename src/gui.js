@@ -1255,6 +1255,38 @@ IDE_Morph.prototype.createSpriteBar = function () {
     };
 };
 */
+//hides primitive blocks for a particular sprite
+//will hand it a book eventually
+//right now handing it a whole category to get rid of
+IDE_Morph.prototype.hideBlock = function (book) {
+	var allCat = Object.keys(this.currentSprite.blocksCache);
+	var nullCat = [];
+	
+	for (var i = 0; i < allCat.length; i++) {
+	        var catName = allCat[i];
+            this.sprites.contents.forEach(function(e) {
+            	var cat = e.blocksCache[catName];
+            	for (var k = 0; k < cat.length; k++){
+	            	var block = cat[k];
+	            	var blockSpec = block.blockSpec;
+	            	if (!book.hasOwnProperty(blockSpec)) {
+	            		cat[k] = null;
+	            	}
+            	};
+            });
+
+	};
+
+	for (var f = 0; f < allCat.length; f++) {
+	    var catName = allCat[f];
+        this.stage.blocksCache[catName] = null;
+        this.flushPaletteCache(catName);
+
+	};
+	
+};
+
+
 
 //executes scripts
 //parameters are the artifact name & location of spell Vector
@@ -1268,7 +1300,7 @@ IDE_Morph.prototype.fire = function(artifact, location) {
 		num++;
 		lcArtifact = this.checkList.at(num);
 	}
-	var sprite = this.allSprites.at(num+location-1);
+	var sprite = this.allSprites.at(num+location);
 	var morph = sprite.scripts.children[0];
 	
 	var event = new CustomEvent("CK", {detail : morph.blockSpec});

@@ -169,7 +169,7 @@ ThreadManager.prototype.startProcess = function (
         top.addHighlight();
     }
     this.processes.push(newProc);
-    /*
+
     var serializer = new SnapSerializer();
     var str = encodeURIComponent(block.toXML(serializer));
     var app = serializer.app;
@@ -181,8 +181,7 @@ ThreadManager.prototype.startProcess = function (
     	+ '">' 
     	+ str
     	+ '</blocks>'); 
-    	
-    	*/
+
  		
     
     return newProc;
