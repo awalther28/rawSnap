@@ -1316,8 +1316,7 @@ IDE_Morph.prototype.domino = function(artifact, images){
 	var sprite;		//place holder for sprites
 	var lcArtifact;	//used when traversing the checkList
 	var methods = images.length() - 1;	//number of methods
-	//var block = new HatBlockMorph();	//hat block 
-	//block.setSelector('receiveID');		//setting selector for hat block
+	//var arr = [];
 	
 	//setting the artifact icon
 	this.img = images.at(1);
@@ -1346,12 +1345,14 @@ IDE_Morph.prototype.domino = function(artifact, images){
 			if (this.checkList.at(num) === true) {
 				this.addNewSprite();
 				list.add(this.currentSprite);
+				//arr.push(this.currentSprite);
 				//this.allSprites.add(this.currentSprite);
 				var block = new HatBlockMorph();	//hat block 
 				block.setSelector('receiveID');
 				block.setSpec(artifact + ": Button " + acc);	//setting name
 				this.currentSprite.scripts.addChild(block);
 				this.checkList.put(artifact, num);
+				this.selectSprite(this.currentSprite);
 				num++;
 				acc++;
 			}
@@ -1369,11 +1370,13 @@ IDE_Morph.prototype.domino = function(artifact, images){
 	
 	//updating what sprites are on the screen
 	this.sprites = list;
+	//this.stage.children = arr;
 	//updating current sprite to the first on the screen
 	this.currentSprite = this.sprites.at(1);
 	
+	
 	//fixing layout and creating all necessary panels
-	this.buildPanes();
+	this.buildCKPanes();
 	this.fixLayout();
 	
 };
@@ -1426,6 +1429,21 @@ IDE_Morph.prototype.setArtifact = function() {
     thumbnail.setExtent(new Point(100, 75));
     this.spriteBar.add(thumbnail);
 	
+};
+
+//used to refresh panel
+//original buildPanes cleared the stage
+IDE_Morph.prototype.buildCKPanes = function () {
+    this.createLogo();
+    this.createControlBar();
+    this.createCategories();
+    this.createPalette();
+    this.createSpriteBar();
+    this.createSpriteEditor();
+    this.createCorralBar();
+    this.createCorral();
+    //added this in to create the artifact icon in the spriteBar
+    this.setArtifact();
 };
 
 IDE_Morph.prototype.createSpriteBar = function () {

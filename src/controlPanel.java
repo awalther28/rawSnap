@@ -59,7 +59,7 @@ public class controlPanel extends Application // implements EventHandler<Action
 		a2.setOnAction(e -> {webEngine.executeScript("ide.domino('Wand', new List(['wandIcon.png', 'sparkles.png', 'vase_overTile.png', 'target.png']))");});
 		a3.setOnAction( e -> {webEngine.executeScript("ide.hideBlock({Shock : true, Storm : true, Revive : true})");});
 		a4.setOnAction( e -> {webEngine.executeScript("ide.hideBlock({Inferno: true, Ignite: true, Fusion: true, FireEat: true})");});
-		a5.setOnAction( e -> {webEngine.executeScript("ide.fire('Boot', 0)");});
+		a5.setOnAction( e -> {webEngine.executeScript("ide.fire('Boot', 1)");});
 		
 		grid.add(a1, 0, 0);
 		grid.add(a2, 0, 1);
