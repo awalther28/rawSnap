@@ -173,6 +173,7 @@ ThreadManager.prototype.startProcess = function (
     var serializer = new SnapSerializer();
     var str = encodeURIComponent(block.toXML(serializer));
     var app = serializer.app;
+    /*
     javaProcess.setText("process ~ threads.js line 168:"
     	+ 'data:text/xml,<blocks app="'
     	+ app 
@@ -181,7 +182,8 @@ ThreadManager.prototype.startProcess = function (
     	+ '">' 
     	+ str
     	+ '</blocks>'); 
-
+	*/
+    jsDebug.print("process in threads");
  		
     
     return newProc;
