@@ -220,10 +220,26 @@ IDE_Morph.prototype.init = function (isAutoFill) {
     //this.sprites = new List([]); // this.currentSprite]);
     //this.allSprites = new List([]); //this.currentSprite]);
     
+    var block2 = new HatBlockMorph();	//hat block 
+	block2.setSelector('receiveGo');
+	block2.setSpec("Button CK");
+	//block2.isVisible = false;
+	
     var block = new HatBlockMorph();	//hat block 
 	block.setSelector('receiveID');
 	block.setSpec("Button");	//setting name
 	this.currentSprite.scripts.addChild(block);
+
+	
+	/*
+	var move = new CommandBlockMorph();
+	move.setSpec("turn %clockwise %n degrees");
+	move.category = "motion";
+	//move.isVisible = false;
+	block2.addChild(move);	//setting name
+	*/
+	this.currentSprite.scripts.addChild(block2);
+	
     this.sprites = new List([this.currentSprite]); // this.currentSprite]);
     this.allSprites = new List([this.currentSprite]);
     
@@ -1297,7 +1313,7 @@ IDE_Morph.prototype.hideBlock = function (book) {
 
 IDE_Morph.prototype.fireTEST = function() {
 	var event = new CustomEvent("CK", {detail : 'Button'});
-	jsDebug.print("fireTEST");
+	//jsDebug.print("fireTEST");
 	document.getElementById('world').dispatchEvent(event);
 	//completionListener.snapCompletes();
 	//document.getElementById('world').addEventListener(listener);

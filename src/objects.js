@@ -3449,7 +3449,8 @@ Morph.prototype.setPosition = function (aPoint, justMe) {
 SpriteMorph.prototype.forward = function (steps) {
     var dest,
         dist = steps * this.parent.scale || 0;
-
+    
+    console.log("forward");
     if (dist >= 0) {
         dest = this.position().distanceAngle(dist, this.heading);
     } else {
@@ -3500,6 +3501,7 @@ SpriteMorph.prototype.faceToXY = function (x, y) {
 };
 
 SpriteMorph.prototype.turn = function (degrees) {
+	console.log("turn");
     this.setHeading(this.heading + (+degrees || 0));
 };
 
@@ -4903,7 +4905,9 @@ StageMorph.prototype.processIdDispatch = function (event) {
 //second step: sister to processKeyEvent
 StageMorph.prototype.processIdEvent = function (event, action) {
 	var id = event.detail;
+	var idSnapCompletes = id + " CK";
 	action.call(this, id);
+	action.call(this, idSnapCompletes);
 };
 
 //third step: sister to fireKeyEvent

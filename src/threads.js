@@ -170,9 +170,9 @@ ThreadManager.prototype.startProcess = function (
     }
     this.processes.push(newProc);
 
-    var serializer = new SnapSerializer();
-    var str = encodeURIComponent(block.toXML(serializer));
-    var app = serializer.app;
+    //var serializer = new SnapSerializer();
+    //var str = encodeURIComponent(block.toXML(serializer));
+    //var app = serializer.app;
     /*
     javaProcess.setText("process ~ threads.js line 168:"
     	+ 'data:text/xml,<blocks app="'
@@ -183,7 +183,7 @@ ThreadManager.prototype.startProcess = function (
     	+ str
     	+ '</blocks>'); 
 	*/
-    jsDebug.print("process in threads");
+    //jsDebug.print("process in threads");
  		
     
     return newProc;
@@ -247,6 +247,9 @@ ThreadManager.prototype.step = function () {
 
     this.processes.forEach(function (proc) {
         if (!proc.homeContext.receiver.isPickedUp() && !proc.isDead) {
+        	if (proc.topBlock.selector === 'receiveGo') {
+        		console.log("donezo");
+        	}
             proc.runStep();
         }
     });
